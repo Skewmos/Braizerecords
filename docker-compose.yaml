@@ -17,7 +17,6 @@ services:
     restart: always
     volumes:
       - ${PWD}/Braizerecords:/var/www/Braizerecords
-      - ${PWD}/php/php.ini:/usr/local/etc/php/php.ini
     links:
       - mysql
       - maildev
