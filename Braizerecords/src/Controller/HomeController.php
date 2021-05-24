@@ -18,12 +18,12 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="maintenance")
      */
     public function maintenance()
     {
         return $this->render('home/maintenance.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'MaintenanceController',
         ]);
     }
 }

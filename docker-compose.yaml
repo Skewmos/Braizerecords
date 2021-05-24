@@ -3,10 +3,10 @@ services:
   web:
     image: nginx:latest
     ports:
-      - "8080:80"
+      - "8000:80"
     volumes:
-      - /var/www/docker-braizerecords/nginx:/etc/nginx/conf.d
-      - /var/www/docker-braizerecords/Braizerecords:/var/www/Braizerecords
+      - ${PWD}/nginx:/etc/nginx/conf.d
+      - ${PWD}/Braizerecords:/var/www/Braizerecords
     links:
       - php
       - mysql
@@ -16,8 +16,8 @@ services:
     build: php
     restart: always
     volumes:
-      - /var/www/docker-braizerecords/Braizerecords:/var/www/Braizerecords
-      - /var/www/docker-braizerecords/php/php.ini:/usr/local/etc/php/php.ini
+      - ${PWD}/Braizerecords:/var/www/Braizerecords
+      - ${PWD}/php/php.ini:/usr/local/etc/php/php.ini
     links:
       - mysql
       - maildev
@@ -34,17 +34,22 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    links:
-      - mysql:db
+    depends_on:
+      - mysql
+    container_name: phpmyadmin
     ports:
-      - "3000:80"
+      - "8080:80"
+    restart: always
     environment:
       - PMA_USER=root
       - PMA_PASSWORD=root
+      - PMA_HOST=mysql
+
+
 
   maildev:
     image: djfarrelly/maildev
     ports:
-      - "1080:80"
+      - "1081:81"
       - "1025:25"
 
